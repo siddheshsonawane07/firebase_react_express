@@ -1,23 +1,26 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, getIdToken} from "firebase/auth";
 import { useEffect, useState } from "react";
-const provider = new GoogleAuthProvider();
 
 function App() {
   const [auth,setAuth] = useState(false);
+  const[token, setToken] = useState('');
 
   useEffect(()=>{
-    onAuthStateChanged((userCred)=>{
+    const auth = getAuth();
+    const user = auth.currentUser;
+    onAuthStateChanged(auth,(userCred)=>{
       if(userCred){
         setAuth(true);
-        userCred.getIdToken().then((token)=>{
-          console.log(token);
-        });
+        user.getIdToken().then((token)=>{
+          setToken(token);
+        })      
       }
     })
   })
 
   function loginWithGoogle() {
     const auth = getAuth();
+    const provider = new GoogleAuthProvider();
     signInWithPopup(auth,provider).then((userCred) => {
       if(userCred){
         setAuth(true);
@@ -28,7 +31,7 @@ function App() {
 
   return (
     <div className="App">
-      {auth ?(
+      {auth  ?(
       <h1>Todos</h1>
 
       ):(
