@@ -1,9 +1,20 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, getIdToken} from "firebase/auth";
+import { useEffect, useState } from "react";
 const provider = new GoogleAuthProvider();
 
 function App() {
   const [auth,setAuth] = useState(false);
+
+  useEffect(()=>{
+    onAuthStateChanged((userCred)=>{
+      if(userCred){
+        setAuth(true);
+        userCred.getIdToken().then((token)=>{
+          console.log(token);
+        });
+      }
+    })
+  })
 
   function loginWithGoogle() {
     const auth = getAuth();
@@ -14,7 +25,7 @@ function App() {
       console.log(userCred);
     });
   }
-  
+
   return (
     <div className="App">
       {auth ?(
