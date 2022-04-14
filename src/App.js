@@ -1,8 +1,9 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, getIdToken} from "firebase/auth";
 import { useEffect, useState } from "react";
+import HomeScreen from "./components/login";
 
 function App() {
-  const [auth,setAuth] = useState(false);
+  const [auth,setAuth] = useState(false || window.localStorage.getItem('auth')=== true);
   const[token, setToken] = useState('');
 
   useEffect(()=>{
@@ -11,6 +12,7 @@ function App() {
     onAuthStateChanged(auth,(userCred)=>{
       if(userCred){
         setAuth(true);
+        window.localStorage.setItem('auth','true');
         user.getIdToken().then((token)=>{
           setToken(token);
         })      
@@ -24,6 +26,7 @@ function App() {
     signInWithPopup(auth,provider).then((userCred) => {
       if(userCred){
         setAuth(true);
+        window.localStorage.setItem('auth','true');
       }
       console.log(userCred);
     });
@@ -32,8 +35,7 @@ function App() {
   return (
     <div className="App">
       {auth  ?(
-      <h1>Todos</h1>
-
+        <HomeScreen token = {token}/>
       ):(
         <button onClick={loginWithGoogle}> Login with Google </button>
       )}
