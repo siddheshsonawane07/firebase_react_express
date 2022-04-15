@@ -2,9 +2,10 @@ const admin = require('../config/firebase-config')
 
 class Middleware{
     async decodeToken(req,res,next){
-        const token = req.headers.authorization.split("")[1];
-        const decodeValue = await admin.auth().verifyIdToken(token);
-        console.log(decodeValue);
+        const token = req.headers.authorization.split(" ");
+        admin.auth().verifyIdToken(token).then(decodedIdToken=>{
+            console.log("Id token decoded", decodedIdToken);
+        })
         try{
             if(decodeValue){
                 return next();
@@ -16,4 +17,4 @@ class Middleware{
     }
 }
 
-module.exports =  new Middleware();
+module.exports = new Middleware();
