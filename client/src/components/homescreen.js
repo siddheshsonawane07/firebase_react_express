@@ -12,7 +12,7 @@ export default function HomeScreen({token}){
     const fetchData = async (token)=>{
         const res = await axios.get('http://localhost:5000/api/homescreen',{
             headers:{
-                Authorization: "Bearer" + token,
+                Authorization: 'Bearer ' + token,
             },
         });
         console.log(res);

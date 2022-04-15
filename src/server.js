@@ -7,16 +7,18 @@ const PORT = 5000;
 app.use(cors());
 
 app.get('/api/homescreen',(req,res)=>{
-    return res.json({homescreen: [
-        {
-            title: 'Name',
-        },
-        {
-            title: 'Email id',
-        },
-        {
-            title: 'Mobile No. ',
-        }
+
+    return res.json({
+        homescreen: [
+            {
+                title: 'Name',
+            },
+            {
+                title: 'Email id',
+            },
+            {
+                title: 'Mobile No. ',
+            }
     ]})
 });
 
