@@ -7,6 +7,7 @@ const PORT = 5000;
 
 app.use(cors());
 
+//global route
 app.use(middleware.decodeToken);
 
 app.get('/api/homescreen',(req,res)=>{
