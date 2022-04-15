@@ -1,6 +1,6 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, getIdToken} from "firebase/auth";
 import { useEffect, useState } from "react";
-import HomeScreen from "./components/login";
+import HomeScreen from "./components/homescreen";
 
 function App() {
   const [auth,setAuth] = useState(false || window.localStorage.getItem('auth')=== true);
